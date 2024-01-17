@@ -1,4 +1,5 @@
 const { crawlPage } = require('./crawl.js')
+const { printReport } = require('./report.js')
 
 //an array, the third element is the first argument from command line
 const clArgs = process.argv
@@ -13,5 +14,13 @@ async function main(baseURL) {
     console.log(`Crawl starting in BASE: "${baseURL}"...`)
     let currentURL = baseURL
     let pages = await crawlPage(baseURL, currentURL)
-    console.log(pages)
+    //print report for sorted urls with counts in sortedPages
+    console.log("\x1b[31m", "Report is starting...")
+    setTimeout(() => {
+        let sortedPages = printReport(pages)
+        for (const url in sortedPages) {
+            const count = sortedPages[url]
+            console.log(`Found ${count} internal links to ${url}`)
+        }
+    }, 5000);
 }

@@ -1,5 +1,6 @@
 const { test, expect } = require('@jest/globals');
 const { normalizeURL, getURLsFromHTML } = require('./crawl.js');
+const { printReport } = require('./report.js');
 
 test('normalizing url protocol', () => {
     expect(normalizeURL('https://example.com/')).toBe('example.com')
@@ -54,5 +55,27 @@ test('faulty anchor tags', () => {
     const htmlBody = "<html><body><a href='https//wagslane.dev'><span>Go to Wagslane website</span></a><a href='news/'><span>Go to boot.dev blogs</span></a></body></html>"
     const actual = getURLsFromHTML(htmlBody, baseURL)
     const expected = [ ]
+    expect(actual).toEqual(expected)
+});
+
+test('reverse sort pages', () => {
+    const pages = {
+        "foo": 1,
+        "bar": 2,
+        "baz": 3
+    }
+    const actual = printReport(pages)
+    const expected = {"baz": 3, "bar": 2, "foo": 1}
+    expect(actual).toEqual(expected)
+});
+
+test('reverse sort pages with duplicates', () => {
+    const pages = {
+        "foo": 1,
+        "bar": 2,
+        "baz": 2
+    }
+    const actual = printReport(pages)
+    const expected = {"baz": 2, "bar": 2, "foo": 1}
     expect(actual).toEqual(expected)
 });

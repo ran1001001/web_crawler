@@ -67,13 +67,13 @@ async function crawlPage(baseURL, currentURL, pages={}) {
             pages[normalizedCurrent] = 1
         }
     }
-
+    //Let's start crawling!...
     try {
         console.log(`crawling url: ${currentURL}...; normalized to ========> ${normalizedCurrent}`)
         const response = await fetch(currentURL)
         const contentType = await response.headers.get("content-type")
         if ((contentType.slice(0, 9) !== "text/html") || response.status > 399) {
-            console.log('===========================')
+            console.log('^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^')
             console.error("A fail status code or unexpected type.\n");
             console.log(`Current URL: ${currentURL}`);
             console.log(`Status code: ${response.status}`);
